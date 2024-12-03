@@ -10,26 +10,26 @@ Priyannik Login Microservice is a lightweight microservice for user authenticati
 
 ## Endpoints
 
-### **GET /users/list?token=x**
+### **GET /users/list**
 Retrieve the list of all users.  
-**Access:** Admin only  
+**Access:** Admin only (should have `is_admin` set to true)  
 **Parameters:**  
-- `token` (required): A unique token generated after login.  
+- `token` (required): A unique token generated after login of an admin.  
 
 **Error Codes:**
-- `1601`: Token missing
+- `1601`: `token` parameter missing
 - `1602`: Token is invalid
 - `1603`: Token doesn't belong to an admin account
 
 ---
 
-### **GET /users/getPublicProfile?username=x**
+### **GET /users/getPublicProfile**
 Get the public profile data of a user.  
 **Parameters:**  
 - `username` (required): Username of the user.  
 
 **Error Codes:**
-- `1401`: `'username' parameter missing`
+- `1401`: `username` parameter missing
 - `1402`: User not found
 
 ---
@@ -37,7 +37,7 @@ Get the public profile data of a user.
 ### **POST /users/add**
 Register a new user.  
 **Request Body:**  
-JSON object containing the user details.  
+- JSON object containing `username`, `password` and `email`  
 
 **Error Codes:**
 - `1001`: Too many accounts on the same IP
@@ -52,7 +52,7 @@ JSON object containing the user details.
 ### **POST /users/login**
 Login as a user and receive a token for further operations.  
 **Request Body:**  
-JSON object with `username` and `password`.  
+- JSON object with `username` and `password`.  
 
 **Error Codes:**
 - `1201`: Invalid JSON body
@@ -69,7 +69,7 @@ The system uses structured error codes to facilitate debugging. The format of th
 `ABCD`
 
 - **A:** Module identifier (e.g., 1 for Login/Registration microservice)
-- **B:** Operation type (e.g., Registration, Login, Logout, etc.)
+- **B:** Operation type (e.g., Registration (0), Login (2), Logout (3), GetPublicProfile (4), Update Data (5), Get Users (6))
 - **CD:** Specific error
 
 ### Error Categories
@@ -80,7 +80,7 @@ The system uses structured error codes to facilitate debugging. The format of th
 | `1301-1305`| Errors related to logout operations                                                         |
 | `1401-1402`| Errors related to retrieving public profiles                                                |
 | `1501-1507`| Errors related to user data updates                                                         |
-| `1601-1603`| Errors related to admin user listing                                                        |
+| `1601-1603`| Errors related to admin-only user listing                                                   |
 
 ---
 
