@@ -2,7 +2,6 @@ import { makeResponse } from "../helpers/web_helper"
 import { routePUT } from "./PUT/router"
 import { routeGET } from "./GET/router"
 import { routePOST } from "./POST/router"
-import { routePATCH } from "./PATCH/router"
 
 function handlePOSTRequest(path, request, env) {
     return routePOST(path, request, env)
